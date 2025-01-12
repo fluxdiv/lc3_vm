@@ -162,6 +162,46 @@ void store_base_offset(uint16_t instr);
 // 1111   4bit instr
 // 0000   4bit ignord
 // ...    8bit trapvect
-void trap(uint16_t instr);
+void trap(
+  uint16_t instr,
+  void (*upd_cond_flags)(uint16_t),
+  int* running
+);
+
+// Read single char from keyboard, not echoed to console
+// It's ASCII code is copied into R0, the high 8 bits of R0 are cleared
+void trap_getc(void (*upd_cond_flags)(uint16_t));
+
+// Write a character in R0 (lower 8 bits) to console
+void trap_out();
+
+// starting at address in r0, write each value in memory
+// to stdout until terminator is reached
+void trap_puts();
+
+// Print prompt on screen & read a single char from keyboard
+// character is echoed onto console, then
+// it's ASCII code is copied into R0
+// high 8 bits of R0 are cleared
+void trap_in(void (*upd_cond_flags)(uint16_t));
+
+
+// write string of ASCII characters to console
+// starts with address in R0
+// then each memory address contains two 8bit chars
+// print lower 8 bits first, then higher 8 bits
+// if odd num chars, last one will have x00 in higher 8 bits
+// finishes at occurence of x0000 in a memory location
+void trap_puts_p();
+
+
+// halt execution & print message on console
+void trap_halt(int* running);
+
+
+
+
+
+
 
 #endif // !OPS_H

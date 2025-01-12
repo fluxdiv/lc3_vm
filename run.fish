@@ -46,7 +46,7 @@ if test $status -eq 0
     echo "Compilation successful. Output file is $BASE_NAME"
     echo "Running the program..."
     echo "---------------------------------------------------"
-    ./bin/"$BASE_NAME"
+    # ./bin/"$BASE_NAME"
 else
     echo "Compilation failed."
 end
